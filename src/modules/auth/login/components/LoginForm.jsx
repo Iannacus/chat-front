@@ -43,7 +43,7 @@ function LoginForm({ onSubmit, onChange }) {
               style={{ width: "100%" }}
             />
           </Box>
-          <Typography variant="h4" color="primary">
+          <Typography variant="h4" color="secondary">
             Academlo chat
           </Typography>
         </Stack>
@@ -54,6 +54,7 @@ function LoginForm({ onSubmit, onChange }) {
           helperText={errors.email ? "Ingresa un correo válido" : ""}
           fullWidth
           label="Email"
+          color="secondary"
         />
         <TextField
           {...register("password")}
@@ -73,12 +74,13 @@ function LoginForm({ onSubmit, onChange }) {
               </InputAdornment>
             ),
           }}
+          color="secondary"
         />
         <Button
           fullWidth
           variant="contained"
           size="large"
-          color="primary"
+          color="secondary"
           onClick={() => handleSubmit(onSubmit)}
         >
           {" "}
@@ -88,7 +90,7 @@ function LoginForm({ onSubmit, onChange }) {
           Aún no tienes cuenta{" "}
           <Typography
             component="span"
-            color="primary"
+            color="secondary"
             sx={{ fontWeight: 700, "&:hover": { cursor: "pointer" } }}
             onClick={() => {
               navigate("/auth/register");

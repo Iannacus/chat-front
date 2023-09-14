@@ -19,7 +19,7 @@ function ChatLayout() {
             width: "100%",
             height: "70px",
             marginBottom: "30px",
-            background: (theme) => theme.palette.grey[200],
+            background: (theme) => theme.palette.secondary.dark,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
@@ -32,7 +32,7 @@ function ChatLayout() {
               width: "30px",
               height: "30px",
               borderRadius: "50%",
-              background: (theme) => theme.palette.primary.main,
+              background: (theme) => theme.palette.secondary.main,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -43,18 +43,6 @@ function ChatLayout() {
               const user = JSON.parse(localStorage.getItem("user"));
               const { token, id } = user;
               console.log(`token: ${token}, id: ${id}`);
-              axios.post(
-                "http://localhost:8000/conversations",
-                {
-                  createdBy: id,
-                  participants: [1],
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
             }}
           >
             +
@@ -79,10 +67,11 @@ function ChatLayout() {
         item
         xs={9}
         sx={{
+          position: "relative",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundImage:
-            "url('https://static.vecteezy.com/system/resources/previews/007/167/520/original/geometric-line-circles-pattern-background-design-perfect-for-fashion-print-fabric-clothing-free-vector.jpg')",
+            "url('https://img.freepik.com/premium-vector/abstract-colorful-lines-pattern-art-background_6735-2046.jpg')",
         }}
       >
         <Box
@@ -90,10 +79,20 @@ function ChatLayout() {
             width: "100%",
             height: "70px",
             borderLeft: (theme) => `1px solid ${theme.palette.grey[400]}`,
-            background: (theme) => theme.palette.grey[200],
+            background: (theme) => theme.palette.secondary.dark,
           }}
         />
-        Chat
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            background: "rgba(0, 0, 0, 0.1)",
+            backdropFilter: "blur(7px)",
+          }}
+        >
+          Chat
+        </Box>
       </Grid>
     </Grid>
   );

@@ -13,14 +13,19 @@ function Chat() {
     >
       <Box
         sx={{
-          height: "15%",
-          background: (theme) => theme.palette.primary.light,
-        }}
-      />
-      <Box
-        sx={{
-          height: "85%",
-          background: (theme) => theme.palette.grey[300],
+          height: "100%",
+          position: "relative",
+          backgroundImage:
+            'url("https://images.vexels.com/content/197708/preview/hexagonal-blue-neon-pattern-design-51b90c.png")',
+          backgroundSize: "cover",
+          "&: after": {
+            content: '""',
+            backgroundColor: "rgba(151, 51, 255, 0.7)",
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            backdropFilter: "blur(7px)",
+          },
         }}
       />
       <Box

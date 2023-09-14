@@ -8,8 +8,8 @@ function ChatCard({ name, message, hour }) {
         padding: "20px 20px 0 20px",
         transition: "0.4s",
         "&:hover": {
-          background: (theme) => theme.palette.primary.light,
-          transition: "0.4s",
+          background: (theme) => theme.palette.secondary.main,
+          transition: "0.5s",
         },
       }}
     >

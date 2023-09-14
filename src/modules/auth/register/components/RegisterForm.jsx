@@ -44,7 +44,7 @@ function RegisterForm({ onSubmit, onChange }) {
               style={{ width: "100%" }}
             />
           </Box>
-          <Typography variant="h4" color="primary">
+          <Typography variant="h4" color="secondary">
             Academlo chat
           </Typography>
         </Stack>
@@ -56,6 +56,7 @@ function RegisterForm({ onSubmit, onChange }) {
             label="firstname"
             helperText={errors.firstname ? "Ingresa un nombre" : ""}
             {...register("firstname")}
+            color="secondary"
           />
           <TextField
             error={errors.lastname}
@@ -63,6 +64,7 @@ function RegisterForm({ onSubmit, onChange }) {
             {...register("lastname")}
             helperText={errors.lastname ? "Ingresa un apellido" : ""}
             label="lastname"
+            color="secondary"
           />
         </Stack>
         <TextField
@@ -71,6 +73,7 @@ function RegisterForm({ onSubmit, onChange }) {
           helperText={errors.email ? "Ingresa un correo válido" : ""}
           fullWidth
           label="Email"
+          color="secondary"
         />
         <TextField
           fullWidth
@@ -90,22 +93,23 @@ function RegisterForm({ onSubmit, onChange }) {
               </InputAdornment>
             ),
           }}
+          color="secondary"
         />
         <Button
           fullWidth
           variant="contained"
           size="large"
-          color="primary"
+          color="secondary"
           onClick={() => handleSubmit(onSubmit)}
         >
           {" "}
           Register{" "}
         </Button>
-        <Typography sx={{ textAlign: "center" }} color="primary">
+        <Typography sx={{ textAlign: "center" }} color="secondary">
           Ya tienes una cuenta{" "}
           <Typography
             component="span"
-            color="primary"
+            color="secondary"
             sx={{ fontWeight: 700, "&:hover": { cursor: "pointer" } }}
             onClick={() => {
               navigate("/auth/login");
