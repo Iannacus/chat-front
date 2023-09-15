@@ -32,7 +32,7 @@ function Chat() {
         sx={{
           position: "absolute",
           width: "90%",
-          height: "90%",
+          height: "85%",
           top: 0,
           right: 0,
           bottom: 0,

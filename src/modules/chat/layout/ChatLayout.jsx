@@ -1,7 +1,6 @@
 import { Grid, Box, Stack } from "@mui/material";
-import axios from "axios";
-import react from "react";
 import ChatCard from "../components/ChatCard";
+import { Outlet } from "react-router-dom";
 
 function ChatLayout() {
   return (
@@ -18,7 +17,6 @@ function ChatLayout() {
           sx={{
             width: "100%",
             height: "70px",
-            marginBottom: "30px",
             background: (theme) => theme.palette.secondary.dark,
             display: "flex",
             justifyContent: "flex-end",
@@ -48,7 +46,7 @@ function ChatLayout() {
             +
           </Box>
         </Box>
-        <Stack sx={{ overflow: "scroll", height: "100%" }}>
+        <Stack sx={{ overflowY: "scroll", maxHeight: "calc(100% - 70px)" }}>
           <ChatCard name="Ian Rosas" message="Que onda man!" hour="15:33" />
           <ChatCard name="Sirila la loca" message="soquete!" hour="15:33" />
           <ChatCard name="Ian Rosas" message="Que onda man!" hour="15:33" />
@@ -59,21 +57,10 @@ function ChatLayout() {
           <ChatCard name="Sirila la loca" message="soquete!" hour="15:33" />
           <ChatCard name="Ian Rosas" message="Que onda man!" hour="15:33" />
           <ChatCard name="Sirila la loca" message="soquete!" hour="15:33" />
-          <ChatCard name="Ian Rosas" message="Que onda man!" hour="15:33" />
           <ChatCard name="Sirila la loca" message="soquete!" hour="15:33" />
         </Stack>
       </Grid>
-      <Grid
-        item
-        xs={9}
-        sx={{
-          position: "relative",
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundImage:
-            "url('https://img.freepik.com/premium-vector/abstract-colorful-lines-pattern-art-background_6735-2046.jpg')",
-        }}
-      >
+      <Grid item xs={9} sx={{ height: "100%" }}>
         <Box
           sx={{
             width: "100%",
@@ -82,17 +69,7 @@ function ChatLayout() {
             background: (theme) => theme.palette.secondary.dark,
           }}
         />
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            background: "rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(7px)",
-          }}
-        >
-          Chat
-        </Box>
+        <Outlet />
       </Grid>
     </Grid>
   );

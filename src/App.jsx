@@ -6,6 +6,7 @@ import AuthLayout from "./modules/auth/AuthLayout";
 import RegisterPage from "./modules/auth/register/pages/RegisterPage";
 import Chat from "./modules/chat/pages/Chat";
 import Home from "./modules/home/pages/Home";
+import Conversation from "./modules/chat/components/Conversation";
 
 function App() {
   return (
@@ -39,5 +40,6 @@ const router = createBrowserRouter([
   {
     path: "/chats",
     element: <Chat />,
+    children: [{ path: "conversation/:id", element: <Conversation /> }],
   },
 ]);
