@@ -7,8 +7,17 @@ function RegisterPage() {
   const [open, setOpen] = useState(false);
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
   const submitLogin = (formData) => {
-    console.log(formData);
+    axios
+      .post("http://localhost:8000/users", formData)
+      .then((res) => {
+        setOpen(true);
+      })
+      .catch((error) => {
+        setRequestError(true);
+        setErrorMessage(error.response.data.original.detail);
+      });
   };
 
   const onChange = (formData) => {
@@ -30,7 +39,7 @@ function RegisterPage() {
         onClose={() => setRequestError(false)}
       >
         <Alert severity={open ? "success" : "error"}>
-          {open ? "Usuario creado" : errorMessage}
+          {open ? "Gracias por registrarte" : errorMessage}
         </Alert>
       </Snackbar>
       <RegisterForm onChange={onChange} onSubmit={submitLogin} />

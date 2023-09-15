@@ -56,7 +56,7 @@ function Conversation() {
         gap="20px"
         sx={{
           height: "5%",
-          width: "calc(100% - 80px)",
+          width: "calc(100%)",
           padding: "20px",
           background: (theme) => theme.palette.grey[200],
           position: "sticky",
