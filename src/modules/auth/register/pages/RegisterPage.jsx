@@ -10,7 +10,7 @@ function RegisterPage() {
 
   const submitLogin = (formData) => {
     axios
-      .post("http://localhost:8000/users", formData)
+      .post("http://localhost:8001/users", formData)
       .then((res) => {
         setOpen(true);
       })

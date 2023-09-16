@@ -8,7 +8,18 @@ import LoginForm from "../components/LoginForm";
 function LoginPage() {
   const navigate = useNavigate();
   const submitLogin = (formData) => {
-    console.log(formData);
+    axios
+      .post("http://localhost:8001/login", formData)
+      .then((res) => {
+        // seria mandarlo a un estado global
+        // localstorage
+        localStorage.setItem("user", JSON.stringify(res.data));
+        navigate("/chats");
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const onChange = (formData) => {

@@ -7,6 +7,7 @@ import RegisterPage from "./modules/auth/register/pages/RegisterPage";
 import Chat from "./modules/chat/pages/Chat";
 import Home from "./modules/home/pages/Home";
 import Conversation from "./modules/chat/components/Conversation";
+import ProtectedRoute from "./routes/ProtectedRoutes";
 
 function App() {
   return (
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/chats",
-    element: <Chat />,
+    element: (
+      <ProtectedRoute>
+        <Chat />
+      </ProtectedRoute>
+    ),
     children: [{ path: "conversation/:id", element: <Conversation /> }],
   },
 ]);
