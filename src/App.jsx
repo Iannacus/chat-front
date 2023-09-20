@@ -4,6 +4,7 @@ import LoginPage from "./modules/auth/login/pages/LoginPage";
 import theme from "./theme/newTheme";
 import AuthLayout from "./modules/auth/AuthLayout";
 import RegisterPage from "./modules/auth/register/pages/RegisterPage";
+import ValidateEmail from "./modules/auth/validate-email/ValideteEmail";
 import Chat from "./modules/chat/pages/Chat";
 import Home from "./modules/home/pages/Home";
 import Conversation from "./modules/chat/components/Conversation";
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegisterPage />,
+      },
+      {
+        path: "email-validation",
+        element: <ValidateEmail />,
       },
     ],
   },

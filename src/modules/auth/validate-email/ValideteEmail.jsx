@@ -14,28 +14,15 @@ function ValidateEmail() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (time <= 0) {
-      navigate("/auth/login");
-    }
-    const interval = setInterval(() => {
-      setTime(time - 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [time]);
-
-  useEffect(() => {
-    if (token) {
-      axios
-        .post("http://localhost:8000/confirm-email", { token })
-        .then((resp) => {
-          setCompleted(true);
-          if (resp.status === 204) {
-            setValid(resp.status);
-          }
-        });
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (time <= 0) {
+  //     navigate("/auth/login");
+  //   }
+  //   const interval = setInterval(() => {
+  //     setTime(time - 1);
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [time]);
 
   return (
     <Box
