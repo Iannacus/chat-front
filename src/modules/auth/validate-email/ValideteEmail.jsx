@@ -16,8 +16,26 @@ function ValidateEmail() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (token) {
+      axios
+        .post("http://localhost:8001/validate-user", { token })
+        .then((res) => {
+          console.log(res.status);
+          setValid(res.status);
+        })
+        .catch((error) => {
+          console.log(error.response.status);
+          setValid(error.response.status);
+        })
+        .finally(() => {
+          setCompleted(true);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     let interval;
-    if (valid) {
+    if (valid === 200) {
       if (time <= 0) {
         navigate("/auth/login");
       }
@@ -42,7 +60,7 @@ function ValidateEmail() {
           }}
         >
           <Typography variant="h3">Validando tu correo</Typography>
-          {completed && valid === 204 && (
+          {completed && valid === 200 && (
             <>
               <Typography variant="h4" color="secondary">
                 El correo ha sido verificado
@@ -68,7 +86,7 @@ function ValidateEmail() {
               </Typography>
             </>
           )}
-          {completed && valid !== 204 && (
+          {completed && valid !== 200 && (
             <Typography variant="h4" color="secondary">
               Ocurrio un error
             </Typography>
