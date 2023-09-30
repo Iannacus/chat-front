@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 
-function ChatCard({ name, message, hour }) {
+function ChatCard({ name, message, hour, img }) {
   return (
     <Box
       sx={{
@@ -15,10 +15,7 @@ function ChatCard({ name, message, hour }) {
       }}
     >
       <Stack direction="row" gap="20px">
-        <Avatar
-          alt="avatar"
-          src="https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg"
-        />
+        <Avatar alt="avatar" src={img} />
         <Box sx={{ width: "100%" }}>
           <Stack
             direction="row"

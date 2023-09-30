@@ -9,7 +9,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const submitLogin = (formData) => {
     axios
-      .post("http://localhost:8001/login", formData)
+      .post("http://localhost:8001/api/v1/users/login", formData)
       .then((res) => {
         // seria mandarlo a un estado global
         // localstorage
