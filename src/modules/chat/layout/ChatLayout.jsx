@@ -3,7 +3,8 @@ import { Outlet } from "react-router-dom";
 import UserMenu from "../components/UserMenu";
 import UsersList from "../components/UsersList";
 import ChatList from "../components/ChatsList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const chats = [
   {
@@ -14,28 +15,29 @@ const chats = [
   },
 ];
 
-const users = [
-  {
-    id: 1,
-    firstname: "Ian",
-    lastname: "Rosas",
-    description: "Vivinedo al día",
-    avatar:
-      "https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg",
-  },
-  {
-    id: 2,
-    firstname: "Adriel",
-    lastname: "Maldonado",
-    description: "Solo llamadas",
-    avatar:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjRzkEEVtiPqqpsIeWxJzt-6pieZh0gl5wWncL3yQA1XDIZKWtEcYwAvp5qwbMnDWOAQI&usqp=CAU",
-  },
-];
-
 function ChatLayout() {
   const [showMessages, setShowMessages] = useState(true);
   const [showUsers, setShowUsers] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [conversations, setConversations] = useState([]);
+
+  const { id: userId, token } = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8001/api/v1/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setUsers(res.data.filter((user) => user.id !== userId)));
+
+    axios
+      .get(`http://localhost:8001/api/v1/conversations/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setConversations(res.data));
+  }, []);
+
+  console.log(conversations);
 
   const handleCancelCreateConversation = () => {
     setShowMessages(true);
@@ -55,9 +57,22 @@ function ChatLayout() {
   const onSelectUser = (participantId) => {
     // hacer petición al ep para crear conversacion con
     // userId y participantId
-    const { id: userId, token } = JSON.parse(localStorage.getItem("user"));
     const body = { userId, participantId };
-
+    axios
+      .post("http://localhost:8001/api/v1/conversations", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        axios
+          .get(`http://localhost:8001/api/v1/conversations/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => setConversations(res.data));
+        setShowUsers(false);
+        setShowMessages(true);
+      });
     console.log(body);
   };
 
@@ -94,7 +109,7 @@ function ChatLayout() {
             height: "100%",
           }}
         >
-          {showMessages && <ChatList chats={chats} />}
+          {showMessages && <ChatList chats={conversations} />}
           {showUsers && (
             <UsersList
               users={users}
