@@ -4,16 +4,9 @@ import UserMenu from "../components/UserMenu";
 import UsersList from "../components/UsersList";
 import ChatList from "../components/ChatsList";
 import { useEffect, useState } from "react";
-import axios from "axios";
-
-const chats = [
-  {
-    name: "Adriel Maldonado",
-    message: "No me digas!",
-    hour: "15:33",
-    image: "https://images.pexels.com/photos/3680219/pexels-photo-3680219.jpeg",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import { authRequest } from "../../../services/baseRequest";
+import logoutUnauthorized from "../../../services/logoutUnauthorized";
 
 function ChatLayout() {
   const [showMessages, setShowMessages] = useState(true);
@@ -21,23 +14,27 @@ function ChatLayout() {
   const [users, setUsers] = useState([]);
   const [conversations, setConversations] = useState([]);
 
-  const { id: userId, token } = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+
+  const { id: userId } = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8001/api/v1/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setUsers(res.data.filter((user) => user.id !== userId)));
+    authRequest("get", "/api/v1/users", null)
+      .then((res) => setUsers(res.data.filter((user) => user.id !== userId)))
+      .catch((error) => {
+        logoutUnauthorized(error, () => {
+          navigate("/auth/login");
+        });
+      });
 
-    axios
-      .get(`http://localhost:8001/api/v1/conversations/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => setConversations(res.data));
+    authRequest("get", `/api/v1/conversations/${userId}`, null).then((res) =>
+      setConversations(res.data).catch((error) =>
+        logoutUnauthorized(error, () => {
+          navigate("/auth/login");
+        })
+      )
+    );
   }, []);
-
-  console.log(conversations);
 
   const handleCancelCreateConversation = () => {
     setShowMessages(true);
@@ -55,25 +52,14 @@ function ChatLayout() {
   };
 
   const onSelectUser = (participantId) => {
-    // hacer petición al ep para crear conversacion con
-    // userId y participantId
     const body = { userId, participantId };
-    axios
-      .post("http://localhost:8001/api/v1/conversations", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        axios
-          .get(`http://localhost:8001/api/v1/conversations/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => setConversations(res.data));
-        setShowUsers(false);
-        setShowMessages(true);
-      });
-    console.log(body);
+    authRequestequest("post", "/api/v1/conversations", body).then((res) => {
+      authRequest("get", `/api/v1/conversations/${userId}`, null).then((res) =>
+        setConversations(res.data)
+      );
+      setShowUsers(false);
+      setShowMessages(true);
+    });
   };
 
   return (

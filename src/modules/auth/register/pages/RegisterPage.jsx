@@ -1,7 +1,7 @@
 import { Alert, Box, Snackbar } from "@mui/material";
 import React, { useState } from "react";
 import RegisterForm from "../components/RegisterForm";
-import axios from "axios";
+import { request } from "../../../../services/baseRequest";
 
 function RegisterPage() {
   const [open, setOpen] = useState(false);
@@ -9,8 +9,7 @@ function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const submitLogin = (formData) => {
-    axios
-      .post("http://localhost:8001/users", formData)
+    request("post", "/api/v1/users", formData)
       .then((res) => {
         setOpen(true);
       })

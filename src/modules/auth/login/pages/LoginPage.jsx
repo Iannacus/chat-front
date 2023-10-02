@@ -1,24 +1,27 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, Snackbar, Alert } from "@mui/material";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import axios from "axios";
 import LoginForm from "../components/LoginForm";
+import { request } from "../../../../services/baseRequest";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [requestError, setRequestError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const submitLogin = (formData) => {
-    axios
-      .post("http://localhost:8001/api/v1/users/login", formData)
+    request("post", "/api/v1/users/login", formData)
       .then((res) => {
-        // seria mandarlo a un estado global
-        // localstorage
+        setOpen(true);
         localStorage.setItem("user", JSON.stringify(res.data));
         navigate("/chats");
         console.log(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
+        setRequestError(true);
+        setErrorMessage(error.response.data.error);
       });
   };
 
@@ -35,6 +38,15 @@ function LoginPage() {
         alignItems: "center",
       }}
     >
+      <Snackbar
+        open={requestError || open}
+        autoHideDuration={4000}
+        onClose={() => setRequestError(false)}
+      >
+        <Alert severity={open ? "success" : "error"}>
+          {open ? "Logeado" : errorMessage}
+        </Alert>
+      </Snackbar>
       <LoginForm onChange={onChange} onSubmit={submitLogin} />
     </Box>
   );
