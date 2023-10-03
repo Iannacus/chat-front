@@ -1,7 +1,7 @@
 import { Avatar, Box, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 
-function ChatCard({ name, message, hour, img }) {
+function ChatCard({ name, message, hour, img, id, showMessages }) {
   return (
     <Box
       sx={{
@@ -13,6 +13,7 @@ function ChatCard({ name, message, hour, img }) {
           transition: "0.5s",
         },
       }}
+      onClick={() => showMessages(id)}
     >
       <Stack direction="row" gap="20px">
         <Avatar alt="avatar" src={img} />

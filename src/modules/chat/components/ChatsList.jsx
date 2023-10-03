@@ -1,7 +1,7 @@
 import React from "react";
 import ChatCard from "./ChatCard";
 
-function ChatList({ chats }) {
+function ChatList({ chats, showMessages }) {
   const getParticipantInfo = (participants) => {
     const { id } = JSON.parse(localStorage.getItem("user"));
     const participant = participants.filter(
@@ -30,6 +30,8 @@ function ChatList({ chats }) {
                 ? chat.Conversation.conversationImage
                 : getParticipantInfo(chat.Conversation.Participants).avatar
             }
+            id={chat.ConversationId}
+            showMessages={showMessages}
           />
         );
       })}

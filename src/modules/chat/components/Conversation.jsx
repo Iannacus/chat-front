@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, IconButton, Stack, TextField } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import Message from "./Message";
+import { useParams } from "react-router-dom";
+import { authRequest } from "../../../services/baseRequest";
+import dayjs from "dayjs";
 
 function Conversation() {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const { id } = useParams();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    authRequest("get", `/api/v1/messages/conversation/${id}`).then((res) =>
+      setMessages(res.data)
+    );
+  }, [id]);
+
+  const sendMessage = () => {
+    authRequest("post", `/api/v1/messages/conversation/${id}`, {
+      content: message,
+      senderId: user.id,
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -29,26 +51,15 @@ function Conversation() {
         gap="12px"
         justifyContent="flex-end"
       >
-        <Message hour="5:05 am" content="Hola miundo" name="Siria 🦉" />
-        <Message hour="5:07 am" content="que onda tu 😄" alignment />
-        <Message
-          hour="5:05 am"
-          content="Hola miundo lsdkfj klsadhf  klsadhjf lksdhf kalshjdf  ksadhjf sadsdfds sdfasdf sadfasdf sadfasfas sadfasdf "
-          name="Siria 🦉"
-        />
-        <Message hour="5:05 am" content="Correle" name="Siria 🦉" />
-        <Message hour="5:05 am" content="Ya estamos aqui" name="Siria 🦉" />
-        <Message hour="5:05 am" content="afuera" name="Siria 🦉" />
-        <Message hour="5:07 am" content="voy" alignment />
-        <Message hour="5:08 am" content="Ya me voy" name="Siria 🦉" />
-        <Message hour="5:09 am" content="esperame" alignment />
-        <Message hour="5:09 am" content="no te vayas" alignment />
-        <Message hour="5:09 am" content="ya no me tardo" alignment />
-        <Message hour="5:10 am" content="5 min, ya no mas" name="Siria 🦉" />
-        <Message hour="5:10 am" content="porque no te aviso" name="Siria 🦉" />
-        <Message hour="5:10 am" content="y me voy" name="Siria 🦉" />
-        <Message hour="5:11 am" content="ok ☹️" alignment />
-        <Message hour="5:20 am" content="me fui" name="Siria 🦉" />
+        {messages.map((message) => (
+          <Message
+            key={message.id}
+            content={message.content}
+            hour={dayjs(message.createdAt).format("h:mma")}
+            name={`${message.User.firstname} ${message.User.lastname}`}
+            alignment={user.id === message.senderId}
+          />
+        ))}
       </Stack>
       <Stack
         direction="row"
@@ -68,8 +79,9 @@ function Conversation() {
           placeholder="Escribe un mensaje"
           variant="outlined"
           color="secondary"
+          onChange={(e) => setMessage(e.target.value)}
         />
-        <IconButton>
+        <IconButton onClick={() => sendMessage()}>
           <SendIcon fontSize="large" style={{ color: "#8333FF" }} />
         </IconButton>
       </Stack>

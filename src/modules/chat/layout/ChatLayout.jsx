@@ -19,7 +19,7 @@ function ChatLayout() {
   const { id: userId } = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    authRequest("get", "/api/v1/users", null)
+    authRequest("get", "/api/v1/users")
       .then((res) => setUsers(res.data.filter((user) => user.id !== userId)))
       .catch((error) => {
         logoutUnauthorized(error, () => {
@@ -27,7 +27,7 @@ function ChatLayout() {
         });
       });
 
-    authRequest("get", `/api/v1/conversations/${userId}`, null).then((res) =>
+    authRequest("get", `/api/v1/conversations/${userId}`).then((res) =>
       setConversations(res.data).catch((error) =>
         logoutUnauthorized(error, () => {
           navigate("/auth/login");
@@ -60,6 +60,10 @@ function ChatLayout() {
       setShowUsers(false);
       setShowMessages(true);
     });
+  };
+
+  const openMessages = (id) => {
+    navigate(`/chats/conversation/${id}`);
   };
 
   return (
@@ -95,7 +99,9 @@ function ChatLayout() {
             height: "100%",
           }}
         >
-          {showMessages && <ChatList chats={conversations} />}
+          {showMessages && (
+            <ChatList chats={conversations} showMessages={openMessages} />
+          )}
           {showUsers && (
             <UsersList
               users={users}
