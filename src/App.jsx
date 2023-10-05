@@ -1,12 +1,14 @@
 import { ThemeProvider } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter, Router } from "react-router-dom";
 import theme from "./theme/newTheme";
-import router from "./routes";
+import ChatRouter from "./routes";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <ChatRouter />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

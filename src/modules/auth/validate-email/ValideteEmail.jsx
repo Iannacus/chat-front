@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Grid, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 import validate from "../../../assets/valid-email.png";
 import { request } from "../../../services/baseRequest";
 

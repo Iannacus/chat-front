@@ -1,4 +1,4 @@
-import { createHashRouter } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import LoginPage from "../modules/auth/login/pages/LoginPage";
 import AuthLayout from "../modules/auth/AuthLayout";
 import RegisterPage from "../modules/auth/register/pages/RegisterPage";
@@ -8,38 +8,76 @@ import Home from "../modules/home/pages/Home";
 import Conversation from "../modules/chat/components/Conversation";
 import ProtectedRoute from "./ProtectedRoutes";
 
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/auth",
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "email-validation",
-        element: <ValidateEmail />,
-      },
-    ],
-  },
-  {
-    path: "/chats",
-    element: (
-      <ProtectedRoute>
-        <Chat />
-      </ProtectedRoute>
-    ),
-    children: [{ path: "conversation/:id", element: <Conversation /> }],
-  },
-]);
+function ChatRouter() {
+  const routes = useRoutes([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [
+        {
+          path: "login",
+          element: <LoginPage />,
+        },
+        {
+          path: "register",
+          element: <RegisterPage />,
+        },
+        {
+          path: "email-validation",
+          element: <ValidateEmail />,
+        },
+      ],
+    },
+    {
+      path: "/chats",
+      element: (
+        <ProtectedRoute>
+          <Chat />
+        </ProtectedRoute>
+      ),
+      children: [{ path: "conversation/:id", element: <Conversation /> }],
+    },
+  ]);
 
-export default router;
+  return routes;
+}
+
+// const router = createHashRouter([
+//   {
+//     path: "/",
+//     element: <Home />,
+//   },
+//   {
+//     path: "/auth",
+//     element: <AuthLayout />,
+//     children: [
+//       {
+//         path: "login",
+//         element: <LoginPage />,
+//       },
+//       {
+//         path: "register",
+//         element: <RegisterPage />,
+//       },
+//       {
+//         path: "email-validation",
+//         element: <ValidateEmail />,
+//       },
+//     ],
+//   },
+//   {
+//     path: "/chats",
+//     element: (
+//       <ProtectedRoute>
+//         <Chat />
+//       </ProtectedRoute>
+//     ),
+//     children: [{ path: "conversation/:id", element: <Conversation /> }],
+//   },
+// ]);
+
+export default ChatRouter;
