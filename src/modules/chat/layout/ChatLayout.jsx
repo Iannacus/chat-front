@@ -62,7 +62,7 @@ function ChatLayout() {
 
   const onSelectUser = (participantId) => {
     const body = { userId, participantId };
-    authRequestequest("post", "/api/v1/conversations", body).then((res) => {
+    authRequest("post", "/api/v1/conversations", body).then((res) => {
       authRequest("get", `/api/v1/conversations/${userId}`, null).then((res) =>
         setConversations(res.data)
       );
