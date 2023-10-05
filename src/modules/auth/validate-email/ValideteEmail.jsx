@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import validate from "../../../assets/valid-email.png";
+import { request } from "../../../services/baseRequest";
 
 function ValidateEmail() {
   const [valid, setValid] = useState("");
@@ -17,8 +18,7 @@ function ValidateEmail() {
 
   useEffect(() => {
     if (token) {
-      axios
-        .post("http://localhost:8001/validate-user", { token })
+      request("post", "/api/v1/user/validate", { token })
         .then((res) => {
           console.log(res.status);
           setValid(res.status);
