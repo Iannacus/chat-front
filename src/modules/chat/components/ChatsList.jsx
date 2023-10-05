@@ -7,7 +7,6 @@ function ChatList({ chats, showMessages }) {
     const participant = participants.filter(
       (participant) => participant.UserId !== id
     )[0];
-    console.log(participant);
     const info = {
       name: `${participant.User.firstname} ${participant.User.lastname}`,
       avatar: participant.User.avatar,

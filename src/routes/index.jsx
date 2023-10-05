@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import LoginPage from "../modules/auth/login/pages/LoginPage";
 import AuthLayout from "../modules/auth/AuthLayout";
 import RegisterPage from "../modules/auth/register/pages/RegisterPage";
@@ -8,7 +8,7 @@ import Home from "../modules/home/pages/Home";
 import Conversation from "../modules/chat/components/Conversation";
 import ProtectedRoute from "./ProtectedRoutes";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
