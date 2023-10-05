@@ -18,7 +18,7 @@ function ValidateEmail() {
 
   useEffect(() => {
     if (token) {
-      request("post", "/api/v1/user/validate", { token })
+      request("post", "/api/v1/users/validate", { token })
         .then((res) => {
           console.log(res.status);
           setValid(res.status);
