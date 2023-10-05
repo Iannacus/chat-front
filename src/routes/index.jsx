@@ -9,7 +9,7 @@ import Conversation from "../modules/chat/components/Conversation";
 import ProtectedRoute from "./ProtectedRoutes";
 
 function ChatRouter() {
-  const routes = useRoutes([
+  return useRoutes([
     {
       path: "/",
       element: <Home />,
@@ -42,8 +42,6 @@ function ChatRouter() {
       children: [{ path: "conversation/:id", element: <Conversation /> }],
     },
   ]);
-
-  return routes;
 }
 
 // const router = createHashRouter([
